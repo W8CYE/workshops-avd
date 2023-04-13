@@ -11,6 +11,7 @@
   - [AAA Authorization](#aaa-authorization)
 - [Monitoring](#monitoring)
   - [TerminAttr Daemon](#terminattr-daemon)
+  - [Logging](#logging)
 - [MLAG](#mlag)
   - [MLAG Summary](#mlag-summary)
   - [MLAG Device Configuration](#mlag-device-configuration)
@@ -140,7 +141,7 @@ management api http-commands
 
 ```eos
 !
-username arista privilege 15 role network-admin secret sha512 $6$V1TfiKDXGLePtKOD$pi6GnNKo8TK.UwsDSI4t/lRn3zRAZ60/KzjavW8q1vU4WhYCz0Erbd8qEtH097fPp/Fzlx18/cJGdfd4Vs1ke/
+username arista privilege 15 role network-admin secret sha512 $6$2SwTD3WNAqZCUioV$jcrEtAlhyEokDzlknuMY/P.nTtXXr35lGQUGJ4delw/yU3L.9ZHId74W.mNSnuT/zMNFgU/VHjswHJZ2B3sQp1
 ```
 
 ## AAA Authorization
@@ -177,6 +178,31 @@ aaa authorization exec default local
 daemon TerminAttr
    exec /usr/bin/TerminAttr -cvaddr=192.168.0.5:9910 -cvauth=token,/tmp/token -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -taillogs
    no shutdown
+```
+
+## Logging
+
+### Logging Servers and Features Summary
+
+| Type | Level |
+| -----| ----- |
+
+| VRF | Source Interface |
+| --- | ---------------- |
+| default | Management0 |
+
+| VRF | Hosts | Ports | Protocol |
+| --- | ----- | ----- | -------- |
+| default | 10.200.0.108 | Default | UDP |
+| default | 10.200.1.108 | Default | UDP |
+
+### Logging Servers and Features Device Configuration
+
+```eos
+!
+logging host 10.200.0.108
+logging host 10.200.1.108
+logging source-interface Management0
 ```
 
 # MLAG
